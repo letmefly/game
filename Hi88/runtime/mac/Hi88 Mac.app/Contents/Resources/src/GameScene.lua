@@ -1,3 +1,4 @@
+local netutil = require "network.netutil"
 
 local GameScene = class("GameScene",function()
     return cc.Scene:create()
@@ -15,6 +16,12 @@ function GameScene:ctor()
     self.visibleSize = cc.Director:getInstance():getVisibleSize()
     self.origin = cc.Director:getInstance():getVisibleOrigin()
     self.schedulerID = nil
+
+    netutil.connect("127.0.0.1", 8888)
+    netutil.register("handshake", function(msg)
+        print ("sn = " .. msg.sn)
+    end)
+    netutil.send("handshake", {sn = 88888})
 end
 
 function GameScene:playBgMusic()

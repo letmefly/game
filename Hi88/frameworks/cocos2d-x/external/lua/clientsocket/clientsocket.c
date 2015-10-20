@@ -104,10 +104,11 @@ clientsocket_pushmessage(struct queue *q, const char *data, unsigned int size) {
         return -1;
     }
     
-    char *message_data = (char *)malloc(size + 10);
-    memcpy(message_data, data, size);
+    char *messagedata = (char *)malloc(size + 10);
+    memset(messagedata, 0, size + 10);
+    memcpy(messagedata, data, size);
     
-    message->data = message_data;
+    message->data = messagedata;
     message->size = size;
     
     int ret = message_queue_push(q, message);
@@ -123,7 +124,7 @@ clientsocket_parsebuff(struct queue *q, char *databuff, long databuff_size, long
     if (databuff_size > PACKAGE_HEADER_SIZE) {
         struct package_header *header = (struct package_header*)databuff;
         unsigned int message_size = (NTOHS(header->size));
-        if (databuff_size > PACKAGE_HEADER_SIZE + message_size) {
+        if (databuff_size >= PACKAGE_HEADER_SIZE + message_size) {
             clientsocket_pushmessage(q, databuff, PACKAGE_HEADER_SIZE + message_size);
             
             *offset = *offset + message_size + PACKAGE_HEADER_SIZE;
@@ -191,6 +192,7 @@ clientsocket_connect(const char *ip, unsigned short port) {
             printf("create socket error\n");
             return -1;
         }
+        s_fd = fd;
     }
     
     if (connect(fd, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
@@ -224,6 +226,8 @@ clientsocket_start() {
     if (s_pid > 0) return -1;
     s_sendqueue = malloc(sizeof(struct queue));
     s_recvqueue = malloc(sizeof(struct queue));
+    memset(s_sendqueue, 0, sizeof(struct queue));
+    memset(s_recvqueue, 0, sizeof(struct queue));
     pthread_mutex_init(&s_sendqueue->lock, NULL);
     pthread_mutex_init(&s_recvqueue->lock, NULL);
     struct thread_param *arg = malloc(sizeof(struct thread_param));
@@ -268,10 +272,14 @@ int clientsocket_send(unsigned short prototype, const char *data, unsigned int s
     }
     
     char *message_data = (char *)malloc(size + 4 + 10);
+    memset(message_data, 0, size + 4 + 10);
+    
     // write message totoal size. (prototype + logical_data_size)
     write_2byte(message_data, size+2);
+    
     // wirte prototype
-    write_2byte(message_data, prototype);
+    write_2byte(message_data+2, prototype);
+    
     memcpy(message_data+4, data, size);
     
     message->data = message_data;

@@ -1,6 +1,7 @@
 
 cc.FileUtils:getInstance():addSearchPath("src")
 cc.FileUtils:getInstance():addSearchPath("res")
+cc.FileUtils:getInstance():addSearchPath("src/network")
 
 -- CC_USE_DEPRECATED_API = true
 require "cocos.init"

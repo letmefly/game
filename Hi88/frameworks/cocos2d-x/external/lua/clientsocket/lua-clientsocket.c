@@ -35,7 +35,7 @@ lsend(lua_State *L) {
     long prototype = luaL_checkinteger(L, 1);
 	const char *buffer = luaL_checklstring(L, 2, &sz);
     clientsocket_send((unsigned short)prototype, buffer, (unsigned int)sz);
-	free((void*)buffer);
+	//free((void*)buffer);
 	return 0;
 }
 
@@ -67,7 +67,8 @@ luaopen_clientsocket(lua_State *L) {
         { "recv", lrecv },
 		{ NULL, NULL }
 	};
-	luaL_newlib(L, l);
+//	luaL_newlib(L, l);
+    luaL_register(L, "clientsocket", l);
     
     return 0;
 }

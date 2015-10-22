@@ -23,7 +23,10 @@ static int
 lconnect(lua_State *L) {
 	const char * addr = luaL_checkstring(L, 1);
 	long port = luaL_checkinteger(L, 2);
-    int ret = clientsocket_connect(addr, (unsigned short)port);
+    int ret = clientsocket_init(addr, (unsigned short)port);
+    if (!ret) {
+        clientsocket_start();
+    }
     lua_pushinteger(L, ret);
     return 1;
 }

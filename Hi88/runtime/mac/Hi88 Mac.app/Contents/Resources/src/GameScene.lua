@@ -1,4 +1,5 @@
 local netutil = require "network.netutil"
+-- local SocketTCP = require "network.SocketTCP"
 
 local GameScene = class("GameScene",function()
     return cc.Scene:create()
@@ -17,7 +18,7 @@ function GameScene:ctor()
     self.origin = cc.Director:getInstance():getVisibleOrigin()
     self.schedulerID = nil
 
-    netutil.connect("127.0.0.1", 8888)
+    netutil.connect("localhost", 8888)
     netutil.register("handshake", function(msg)
         print ("sn = " .. msg.sn)
     end)
@@ -50,7 +51,17 @@ function GameScene:creatDog()
     local animate = cc.Animate:create(animation);
     spriteDog:runAction(cc.RepeatForever:create(animate))
 
+
+    -- self.socket = SocketTCP.new("127.0.0.1", 8888, false)
+    -- self.socket:addEventListener(SocketTCP.EVENT_CONNECTED, function(event) print("connect ok") end)
+    -- self.socket:addEventListener(SocketTCP.EVENT_CLOSE, function(event)end)
+    -- self.socket:addEventListener(SocketTCP.EVENT_CLOSED, function(event)end)
+    -- self.socket:addEventListener(SocketTCP.EVENT_CONNECT_FAILURE, function(event)end)
+    -- self.socket:addEventListener(SocketTCP.EVENT_DATA, function(event)end)
+    -- self.socket:connect()
+
     -- moving dog at every frame
+    local sn = 0
     local function tick()
         if spriteDog.isPaused then return end
         local x, y = spriteDog:getPosition()
@@ -61,9 +72,13 @@ function GameScene:creatDog()
         end
 
         spriteDog:setPositionX(x)
+        sn = sn + 1
+        netutil.send("handshake", {sn = sn})
     end
 
     self.schedulerID = cc.Director:getInstance():getScheduler():scheduleScriptFunc(tick, 0, false)
+
+
 
     return spriteDog
 end

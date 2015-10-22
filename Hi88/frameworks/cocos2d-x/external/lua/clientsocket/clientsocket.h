@@ -11,7 +11,15 @@
 
 #include <stdio.h>
 
-int clientsocket_connect(const char *ip, unsigned short port);
+enum connect_status {
+    STATUS_NOT_CONNECT,
+    STATUS_CONNECTING,
+    STATUS_CONNECT_OK,
+    STATUS_CONNECT_FAIL,
+    STATUS_DISCONNECT
+};
+
+int clientsocket_init(const char *ip, unsigned short port);
 
 int clientsocket_start();
 

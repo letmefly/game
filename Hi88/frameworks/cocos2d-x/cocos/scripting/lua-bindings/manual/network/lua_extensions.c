@@ -31,7 +31,7 @@ extern int luaopen_clientsocket(lua_State *L);
 extern int luaopen_lpeg (lua_State *L);
 
 static luaL_Reg luax_exts[] = {
-    //{"socket.core", luaopen_socket_core},
+    {"socket.core", luaopen_socket_core},
     {"mime.core", luaopen_mime_core},
     {"lpeg", luaopen_lpeg},
     {"lfs", luaopen_lfs},

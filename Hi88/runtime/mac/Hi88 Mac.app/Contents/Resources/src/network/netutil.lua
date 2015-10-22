@@ -47,11 +47,15 @@ local function recvmsg()
 end
 
 local function tick()
-	local msgname, msg = recvmsg()
-	if msgname and msg then
-		local handler = msghandlers[msgname]
-		if handler then
-			handler(msg)
+	while true do
+		local msgname, msg = recvmsg()
+		if msgname and msg then
+			local handler = msghandlers[msgname]
+			if handler then
+				handler(msg)
+			end
+		else
+			break;
 		end
 	end
 end

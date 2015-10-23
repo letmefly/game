@@ -429,18 +429,12 @@ clientsocket_init(const char *addr, unsigned short port) {
     return 0;
 }
 
+
 int
-clientsocket_get_connectstatus() {
+clientsocket_connectstatus() {
     assert(s_clientsocket);
     return s_clientsocket->connectstatus;
 }
-
-int
-clientsocket_set_connectstatus(int status) {
-    s_clientsocket->connectstatus = status;
-    return 0;
-}
-
 
 static struct message* message_malloc() {
     struct message *ret = (struct message*)malloc(sizeof(struct message));

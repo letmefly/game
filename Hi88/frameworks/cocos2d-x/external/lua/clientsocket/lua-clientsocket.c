@@ -61,6 +61,13 @@ lrecv(lua_State *L) {
     return 3;
 }
 
+static int
+lconnectstatus(lua_State *L) {
+    int status = clientsocket_connectstatus();
+    lua_pushinteger(L, status);
+    return 1;
+}
+
 
 int
 luaopen_clientsocket(lua_State *L) {
@@ -68,9 +75,10 @@ luaopen_clientsocket(lua_State *L) {
 		{ "connect", lconnect },
         { "send", lsend },
         { "recv", lrecv },
+        { "connectstatus", lconnectstatus },
 		{ NULL, NULL }
 	};
-//	luaL_newlib(L, l);
+
     luaL_register(L, "clientsocket", l);
     
     return 0;

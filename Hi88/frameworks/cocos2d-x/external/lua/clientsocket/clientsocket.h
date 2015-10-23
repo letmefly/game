@@ -27,4 +27,6 @@ int clientsocket_recv(unsigned short *prototype, char *outdata, unsigned int *ou
 
 int clientsocket_send(unsigned short prototype, const char *data, unsigned int size);
 
+int clientsocket_connectstatus();
+
 #endif /* defined(__test_clientsocket__clientsocket__) */

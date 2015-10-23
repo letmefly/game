@@ -46,7 +46,29 @@ local function recvmsg()
 	return msgname, msg
 end
 
+-- connect status value
+-- enum connect_status {
+--     STATUS_NOT_CONNECT,
+--     STATUS_CONNECTING,
+--     STATUS_CONNECT_OK,
+--     STATUS_CONNECT_FAIL,
+--     STATUS_DISCONNECT
+-- };
+local STATUS_NOT_CONNECT = 0
+local STATUS_CONNECTING = 1
+local STATUS_CONNECT_OK = 2
+local STATUS_CONNECT_FAIL = 3
+local STATUS_DISCONNECT = 4
+
+local connectstatus = STATUS_NOT_CONNECT
+
 local function tick()
+	local status = clientsocket.connectstatus()
+	if status ~= STATUS_CONNECT_OK then
+		return
+	end
+	
+	-- receive message
 	while true do
 		local msgname, msg = recvmsg()
 		if msgname and msg then

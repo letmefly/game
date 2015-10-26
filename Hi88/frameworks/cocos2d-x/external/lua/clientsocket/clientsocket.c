@@ -489,6 +489,14 @@ message_queue_push(struct messagequeue *q, struct message *message) {
     return 0;
 }
 
+static void
+message_queue_clear(struct messagequeue *q) {
+    while (1) {
+        struct message *message = message_queue_head(q);
+        if (message == NULL) break;
+        message_queue_pop(q);
+    }
+}
 
 
 int
@@ -705,11 +713,35 @@ clientsocket_start() {
 
 int
 clientsocket_stop() {
+    // 1. kill network thread
+    if (0 != s_clientsocket->pid) {
+        pthread_kill(s_clientsocket->pid, 0);
+    }
+    
+    // 2. clear send and receive message queue
+    struct messagequeue * sendqueue = s_clientsocket->sendqueue;
+    if (sendqueue) {
+        message_queue_clear(sendqueue);
+        s_clientsocket->sendqueue = NULL;
+    }
+    struct messagequeue * recvqueue = s_clientsocket->recvqueue;
+    if (recvqueue) {
+        message_queue_clear(recvqueue);
+        s_clientsocket->recvqueue = NULL;
+    }
+    
+    // 3. close socket fd
+    close(s_clientsocket->fd);
+    s_clientsocket->fd = 0;
+    s_clientsocket->connectstatus = STATUS_NOT_CONNECT;
+    
     return 0;
 }
 
 int
 clientsocket_reconnect() {
+    clientsocket_stop();
+    clientsocket_start();
     return 0;
 }
 

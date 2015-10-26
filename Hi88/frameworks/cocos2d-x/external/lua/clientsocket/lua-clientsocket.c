@@ -68,6 +68,12 @@ lconnectstatus(lua_State *L) {
     return 1;
 }
 
+static int
+lreconnect(lua_State *L) {
+    clientsocket_reconnect();
+    return 0;
+}
+
 
 int
 luaopen_clientsocket(lua_State *L) {
@@ -76,6 +82,7 @@ luaopen_clientsocket(lua_State *L) {
         { "send", lsend },
         { "recv", lrecv },
         { "connectstatus", lconnectstatus },
+        { "reconnect" , lreconnect},
 		{ NULL, NULL }
 	};
 

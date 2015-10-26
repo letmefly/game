@@ -23,6 +23,8 @@ int clientsocket_init(const char *ip, unsigned short port);
 
 int clientsocket_start();
 
+int clientsocket_stop();
+
 int clientsocket_recv(unsigned short *prototype, char *outdata, unsigned int *outsize);
 
 int clientsocket_send(unsigned short prototype, const char *data, unsigned int size);

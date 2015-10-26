@@ -2,6 +2,21 @@ local protobuf = require "protobuf"
 local protohelper = require "proto.protohelper"
 local clientsocket = require "clientsocket"
 
+-- connect status value
+-- enum connect_status {
+--     STATUS_NOT_CONNECT,
+--     STATUS_CONNECTING,
+--     STATUS_CONNECT_OK,
+--     STATUS_CONNECT_FAIL,
+--     STATUS_DISCONNECT
+-- };
+local STATUS_NOT_CONNECT = 0
+local STATUS_CONNECTING = 1
+local STATUS_CONNECT_OK = 2
+local STATUS_CONNECT_FAIL = 3
+local STATUS_DISCONNECT = 4
+local connectstatus = STATUS_NOT_CONNECT
+
 local netutil = {}
 local msghandlers = {}
 
@@ -22,6 +37,7 @@ function netutil.connect(ip, port)
 end
 
 function netutil.send(msgname, msg)
+	if connectstatus ~= STATUS_CONNECT_OK then return end
 	local pbtype = protohelper.gettype(msgname)
 	if pbtype == nil then
 		print("[ERR]no such proto:" ..msgname)
@@ -46,27 +62,9 @@ local function recvmsg()
 	return msgname, msg
 end
 
--- connect status value
--- enum connect_status {
---     STATUS_NOT_CONNECT,
---     STATUS_CONNECTING,
---     STATUS_CONNECT_OK,
---     STATUS_CONNECT_FAIL,
---     STATUS_DISCONNECT
--- };
-local STATUS_NOT_CONNECT = 0
-local STATUS_CONNECTING = 1
-local STATUS_CONNECT_OK = 2
-local STATUS_CONNECT_FAIL = 3
-local STATUS_DISCONNECT = 4
-
-local connectstatus = STATUS_NOT_CONNECT
-
 local function tick()
 	local status = clientsocket.connectstatus()
-	if status ~= STATUS_CONNECT_OK then
-		return
-	end
+	if status ~= STATUS_CONNECT_OK then return end
 	
 	-- receive message
 	while true do

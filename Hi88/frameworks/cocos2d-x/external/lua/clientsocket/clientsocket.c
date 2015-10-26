@@ -705,5 +705,12 @@ clientsocket_start() {
 
 int
 clientsocket_stop() {
+    return 0;
 }
+
+int
+clientsocket_reconnect() {
+    return 0;
+}
+
 

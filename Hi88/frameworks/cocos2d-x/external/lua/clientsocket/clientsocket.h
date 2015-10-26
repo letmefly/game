@@ -29,4 +29,6 @@ int clientsocket_send(unsigned short prototype, const char *data, unsigned int s
 
 int clientsocket_connectstatus();
 
+int clientsocket_reconnect();
+
 #endif /* defined(__test_clientsocket__clientsocket__) */

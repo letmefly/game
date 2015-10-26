@@ -731,8 +731,10 @@ clientsocket_stop() {
     }
     
     // 3. close socket fd
-    close(s_clientsocket->fd);
-    s_clientsocket->fd = 0;
+    if (0 != s_clientsocket->fd) {
+        close(s_clientsocket->fd);
+        s_clientsocket->fd = 0;
+    }
     s_clientsocket->connectstatus = STATUS_NOT_CONNECT;
     
     return 0;

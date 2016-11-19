@@ -2,6 +2,8 @@ local protobuf = require "protobuf"
 local protohelper = require "proto.protohelper"
 local clientsocket = require "clientsocket"
 
+local MSG_TICK_TIME = 1.0/30
+
 -- connect status value
 -- enum connect_status {
 --     STATUS_NOT_CONNECT,
@@ -63,13 +65,13 @@ local function recvmsg()
 end
 
 local function tick()
-	local status = clientsocket.connectstatus()
-	if status ~= STATUS_CONNECT_OK then return end
-	
+	connectstatus = clientsocket.connectstatus()
+	if connectstatus ~= STATUS_CONNECT_OK then return end
 	-- receive message
 	while true do
 		local msgname, msg = recvmsg()
 		if msgname and msg then
+			print (msgname)
 			local handler = msghandlers[msgname]
 			if handler then
 				handler(msg)
@@ -81,6 +83,6 @@ local function tick()
 end
 
 local scheduler = cc.Director:getInstance():getScheduler()
-local schedulerID = scheduler:scheduleScriptFunc(tick, 0, false)
-
+local schedulerID = scheduler:scheduleScriptFunc(tick, MSG_TICK_TIME, false)
+print ("--require netutil--")
 return netutil

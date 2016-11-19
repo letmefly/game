@@ -1,0 +1,160 @@
+message GameLogin {
+	optional string userId = 1;
+	optional string authCode = 2;
+	optional int32 version = 3;
+}
+
+message GameLogin_ack {
+	// 0 success, -1 auth code invalid, -2 version too low
+	optional int32 errno = 1;
+}
+
+message CreateRoom {
+	optional int32 roomType = 1;
+}
+
+message CreateRoom_ack {
+	// 0 success, -1 room card not enough
+	optional int32 errno = 1;
+	optional string roomNum = 2;
+}
+
+message JoinRoom {
+	optional string roomNum = 1;
+}
+
+message JoinRoom_ack {
+	// 0 success, -1 room number invalid
+	optional int32 errno = 1;
+}
+
+message LeaveRoom {
+	// player 1, 2, 3
+	optional int32 who = 1;
+}
+
+message LeaveRoom_ntf {
+	// player 1, 2, 3
+	optional int32 who = 1;
+}
+
+// when client load res ok and switch to game screen, 
+// notify server that client is ready
+message Ready {
+	optional int32 ready = 1;
+}
+
+message Ready_ntf {
+	message UserInfo {
+		// player 1, 2, 3
+		optional int32 who = 1;
+		optional string nickname = 2;
+		// 1 male or 2 female
+		optional int32 sexType = 3;
+		optional string iconUrl = 4;
+		optional int32 level = 5;
+		optional int32 roomCardNum = 6;
+	}
+	repeated UserInfo userInfoList = 1;
+}
+
+message Start_ntf {
+	// 17 poker
+	repeated int32 pokerList = 1;
+}
+
+message WhoGrabLandlord_ntf {
+	// player 1, 2, 3
+	optional int32 who = 1;
+}
+
+message GrabLandlord {
+	// 1 grab, 2 skip
+	optional int32 grabAction = 1;
+}
+
+message GrabLandlord_ntf {
+	// player 1, 2, 3
+	optional int32 who = 1;
+	// 1 grab, 2 skip
+	optional int32 grabAction = 2;
+}
+
+message Landlord_ntf {
+	optional int32 landlord = 1;
+}
+
+// whose token for choosing poker 
+message WhoPlay_ntf {
+	// player 1, 2, 3
+	optional int32 who = 1;
+}
+
+message PlayPokeInfo {
+	// 1 skip, 2 grab landlord, 3 skip
+	optional int32 playAction = 1;
+	// 1 - single, 2 - pair, 3 - joker boom, 4 - 3poker, 5 - boom, 6 - 3+1,
+	// 7 - sequence, 8 - 4+2, 9 - pair sequence, 10 - airplane
+	optional int32 pokerType = 2;
+	repeated int32 pokerList = 3;
+}
+
+message PlayPokeInfo_ntf {
+	// player 1, 2, 3
+	optional int32 who = 1;
+	// 1 skip, 2 grab landlord, 3 skip
+	optional int32 playAction = 2;
+	optional int32 pokerType = 3;
+	repeated int32 pokerList = 4;
+}
+
+message PlayTimeout_ntf {
+	// player 1, 2, 3
+	optional int32 who = 1;
+}
+
+message Last2Poker_ntf {
+	optional int32 who = 1;
+	// 2 or 1
+	optional int32 pokerNum = 2;
+}
+
+message Chat {
+	optional int32 fastTalkId = 1;
+	optional string talkText = 2;
+}
+
+message Chat_ntf {
+	// player 1, 2, 3
+	optional int32 who = 1;
+	optional int32 fastTalkId = 2;
+	optional string talkText = 3;
+}
+
+message GameResult_ntf {
+	optional int32 totalFactor = 1;
+	optional int32 visiblePokeFactor = 2;
+	optional int32 grapLandlordFactor = 3;
+	optional int32 boomFactor = 4;
+	optional int32 springFactor = 5;
+
+	message GameResultInfo {
+		optional int32 who = 1;
+		// 1 win, 2 lose
+		optional int32 result = 2;
+		optional int32 isLandlord = 3;
+		optional int32 totalFactor = 4;
+		optional int32 score = 5;
+	}
+	repeated GameResultInfo resultList = 6;
+}
+
+message RoomResult_ntf {
+
+}
+
+
+
+
+
+

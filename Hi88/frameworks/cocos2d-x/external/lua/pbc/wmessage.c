@@ -13,6 +13,22 @@
 #include <stdbool.h>
 #endif
 
+#ifndef __cplusplus
+
+#define bool    _Bool
+#define true    1
+#define false   0
+
+#else /* __cplusplus */
+
+/* Supporting <stdbool.h> in C++ is a GCC extension.  */
+#define _Bool   bool
+#define bool    bool
+#define false   false
+#define true    true
+
+#endif /* __cplusplus */
+
 #define WMESSAGE_SIZE 64
 
 struct pbc_wmessage {

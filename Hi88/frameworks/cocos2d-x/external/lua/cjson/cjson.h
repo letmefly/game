@@ -8,5 +8,6 @@
 
 #ifndef cocos2d_lua_bindings_cjson_h
 #define cocos2d_lua_bindings_cjson_h
+
 int luaopen_cjson(lua_State *l);
 #endif

@@ -1,6 +1,8 @@
 #ifndef PROTOBUF_C_CONTEXT_H
 #define PROTOBUF_C_CONTEXT_H
-
+#if defined(WIN32) && !defined(__cplusplus)
+#define inline __inline
+#endif
 #include <stdint.h>
 
 #include "array.h"

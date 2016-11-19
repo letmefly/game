@@ -376,10 +376,12 @@ _pbcM_sp_query_insert(struct map_sp *map, const char *key)
 void *
 _pbcM_sp_query(struct map_sp *map, const char *key)
 {
+	size_t hash_full;
+	size_t hash;
 	if (map == NULL)
 		return NULL;
-	size_t hash_full = calc_hash(key);
-	size_t hash = hash_full & (map->cap -1);
+	hash_full = calc_hash(key);
+	hash = hash_full & (map->cap -1);
 
 	struct _pbcM_sp_slot * slot = &map->slot[hash];
 	for (;;) {

@@ -21,6 +21,7 @@ extern "C" {
 // md5
 #include "md5/md5.h"
 
+
 // protobuf-lua
 extern int luaopen_protobuf_c(lua_State *L);
 
@@ -35,10 +36,17 @@ static luaL_Reg luax_exts[] = {
     {"mime.core", luaopen_mime_core},
     {"lpeg", luaopen_lpeg},
     {"lfs", luaopen_lfs},
+
     {"cjson", luaopen_cjson},
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#else
     {"zlib", luaopen_zlib},
+#endif
     {"md5.core", luaopen_md5_core},
+
     {"protobuf.c", luaopen_protobuf_c},
+
     {"clientsocket", luaopen_clientsocket},
     {NULL, NULL}
 };

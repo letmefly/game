@@ -15,6 +15,23 @@
 #include <string.h>
 #include <stdarg.h>
 
+
+#ifndef __cplusplus
+
+#define bool    _Bool
+#define true    1
+#define false   0
+
+#else /* __cplusplus */
+
+/* Supporting <stdbool.h> in C++ is a GCC extension.  */
+#define _Bool   bool
+#define bool    bool
+#define false   false
+#define true    true
+
+#endif /* __cplusplus */
+
 static void
 set_default_v(void * output, int ctype, pbc_var defv) {
 	switch (ctype) {

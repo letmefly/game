@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -11,6 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\external\lua\cjson\dtoa.c" />
+    <ClCompile Include="..\..\..\..\external\lua\cjson\fpconv.c" />
+    <ClCompile Include="..\..\..\..\external\lua\cjson\g_fmt.c" />
+    <ClCompile Include="..\..\..\..\external\lua\cjson\lua_cjson.c" />
+    <ClCompile Include="..\..\..\..\external\lua\cjson\strbuf.c" />
+    <ClCompile Include="..\..\..\..\external\lua\clientsocket\clientsocket.c" />
+    <ClCompile Include="..\..\..\..\external\lua\clientsocket\lua-clientsocket.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lfs\lfs.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lpeg\lpcap.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lpeg\lpcode.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lpeg\lpprint.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lpeg\lptree.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lpeg\lpvm.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\auxiliar.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\buffer.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\except.c" />
@@ -25,6 +38,24 @@
     <ClCompile Include="..\..\..\..\external\lua\luasocket\timeout.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\udp.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\wsocket.c" />
+    <ClCompile Include="..\..\..\..\external\lua\md5\des56.c" />
+    <ClCompile Include="..\..\..\..\external\lua\md5\ldes56.c" />
+    <ClCompile Include="..\..\..\..\external\lua\md5\md5.c" />
+    <ClCompile Include="..\..\..\..\external\lua\md5\md5lib.c" />
+    <ClCompile Include="..\..\..\..\external\lua\pbc\alloc.c" />
+    <ClCompile Include="..\..\..\..\external\lua\pbc\array.c" />
+    <ClCompile Include="..\..\..\..\external\lua\pbc\bootstrap.c" />
+    <ClCompile Include="..\..\..\..\external\lua\pbc\context.c" />
+    <ClCompile Include="..\..\..\..\external\lua\pbc\decode.c" />
+    <ClCompile Include="..\..\..\..\external\lua\pbc\lua-pbc.c" />
+    <ClCompile Include="..\..\..\..\external\lua\pbc\map.c" />
+    <ClCompile Include="..\..\..\..\external\lua\pbc\pattern.c" />
+    <ClCompile Include="..\..\..\..\external\lua\pbc\proto.c" />
+    <ClCompile Include="..\..\..\..\external\lua\pbc\register.c" />
+    <ClCompile Include="..\..\..\..\external\lua\pbc\rmessage.c" />
+    <ClCompile Include="..\..\..\..\external\lua\pbc\stringpool.c" />
+    <ClCompile Include="..\..\..\..\external\lua\pbc\varint.c" />
+    <ClCompile Include="..\..\..\..\external\lua\pbc\wmessage.c" />
     <ClCompile Include="..\..\..\..\external\lua\quick\LuaEventNode.cpp" />
     <ClCompile Include="..\..\..\..\external\lua\quick\LuaNodeManager.cpp" />
     <ClCompile Include="..\..\..\..\external\lua\quick\LuaTouchEventManager.cpp" />
@@ -81,6 +112,19 @@
     <ClCompile Include="..\manual\ui\lua_cocos2dx_ui_manual.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\external\lua\cjson\cjson.h" />
+    <ClInclude Include="..\..\..\..\external\lua\cjson\dtoa_config.h" />
+    <ClInclude Include="..\..\..\..\external\lua\cjson\fpconv.h" />
+    <ClInclude Include="..\..\..\..\external\lua\cjson\strbuf.h" />
+    <ClInclude Include="..\..\..\..\external\lua\clientsocket\clientsocket.h" />
+    <ClInclude Include="..\..\..\..\external\lua\clientsocket\lua-clientsocket.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lfs\lfs.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lpeg\lpcap.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lpeg\lpcode.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lpeg\lpprint.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lpeg\lptree.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lpeg\lptypes.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lpeg\lpvm.h" />
     <ClInclude Include="..\..\..\..\external\lua\luajit\include\lauxlib.h" />
     <ClInclude Include="..\..\..\..\external\lua\luajit\include\lua.h" />
     <ClInclude Include="..\..\..\..\external\lua\luajit\include\luaconf.h" />
@@ -100,6 +144,21 @@
     <ClInclude Include="..\..\..\..\external\lua\luasocket\timeout.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\udp.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\wsocket.h" />
+    <ClInclude Include="..\..\..\..\external\lua\md5\des56.h" />
+    <ClInclude Include="..\..\..\..\external\lua\md5\ldes56.h" />
+    <ClInclude Include="..\..\..\..\external\lua\md5\md5.h" />
+    <ClInclude Include="..\..\..\..\external\lua\md5\md5lib.h" />
+    <ClInclude Include="..\..\..\..\external\lua\pbc\alloc.h" />
+    <ClInclude Include="..\..\..\..\external\lua\pbc\array.h" />
+    <ClInclude Include="..\..\..\..\external\lua\pbc\bootstrap.h" />
+    <ClInclude Include="..\..\..\..\external\lua\pbc\context.h" />
+    <ClInclude Include="..\..\..\..\external\lua\pbc\descriptor.pbc.h" />
+    <ClInclude Include="..\..\..\..\external\lua\pbc\map.h" />
+    <ClInclude Include="..\..\..\..\external\lua\pbc\pattern.h" />
+    <ClInclude Include="..\..\..\..\external\lua\pbc\pbc.h" />
+    <ClInclude Include="..\..\..\..\external\lua\pbc\proto.h" />
+    <ClInclude Include="..\..\..\..\external\lua\pbc\stringpool.h" />
+    <ClInclude Include="..\..\..\..\external\lua\pbc\varint.h" />
     <ClInclude Include="..\..\..\..\external\lua\quick\LuaEventNode.h" />
     <ClInclude Include="..\..\..\..\external\lua\quick\LuaNodeManager.h" />
     <ClInclude Include="..\..\..\..\external\lua\quick\LuaTouchEventManager.h" />
@@ -153,6 +212,7 @@
     <ClInclude Include="..\manual\ui\lua_cocos2dx_ui_manual.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\external\lua\lpeg\lpeg.html" />
     <None Include="..\script\AudioEngine.lua">
       <FileType>Document</FileType>
     </None>

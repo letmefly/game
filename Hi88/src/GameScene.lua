@@ -1,4 +1,5 @@
 local netutil = require "network.netutil"
+local netutil = require "network.netutil"
 -- local SocketTCP = require "network.SocketTCP"
 
 local GameScene = class("GameScene",function()
@@ -18,11 +19,13 @@ function GameScene:ctor()
     self.origin = cc.Director:getInstance():getVisibleOrigin()
     self.schedulerID = nil
 
-    netutil.connect("localhost", 8888)
+    netutil.connect("172.16.8.72", 8888)
+
     netutil.register("handshake", function(msg)
         print ("sn = " .. msg.sn)
     end)
-    netutil.send("handshake", {sn = 88888})
+    --netutil.send("handshake", {sn = 88888})
+    
 end
 
 function GameScene:playBgMusic()
@@ -33,6 +36,7 @@ function GameScene:playBgMusic()
 end
 
 function GameScene:creatDog()
+    print("---------createDog----------")
     local frameWidth = 105
     local frameHeight = 95
 
@@ -73,10 +77,11 @@ function GameScene:creatDog()
 
         spriteDog:setPositionX(x)
         sn = sn + 1
+        print("--handshake--")
         netutil.send("handshake", {sn = sn})
     end
 
-    self.schedulerID = cc.Director:getInstance():getScheduler():scheduleScriptFunc(tick, 0, false)
+    self.schedulerID = cc.Director:getInstance():getScheduler():scheduleScriptFunc(tick, 1.0/10, false)
 
 
 

@@ -81,9 +81,10 @@ function GameScene:creatDog()
         netutil.send("handshake", {sn = sn})
     end
 
-    self.schedulerID = cc.Director:getInstance():getScheduler():scheduleScriptFunc(tick, 1.0/10, false)
-
-
+    --self.schedulerID = cc.Director:getInstance():getScheduler():scheduleScriptFunc(tick, 1.0/10, false)
+    cc.FileUtils:getInstance():addSearchPath("res/image/ui/home/")
+    self.rootNode = ccs.GUIReader:getInstance():widgetFromBinaryFile("HomeCityLayer.csb")
+    self:addChild(self.rootNode)
 
     return spriteDog
 end

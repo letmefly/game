@@ -10,6 +10,9 @@
 #endif
 # define FPCONV_G_FMT_BUFSIZE   32
 
+#define USE_INTERNAL_FPCONV   
+#define ENABLE_CJSON_GLOBAL  
+
 #ifdef USE_INTERNAL_FPCONV
 static inline void fpconv_init()
 {

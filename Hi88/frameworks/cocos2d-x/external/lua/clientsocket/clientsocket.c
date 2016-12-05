@@ -6,19 +6,18 @@
 //  Copyright (c) 2015年 chris li. All rights reserved.
 //
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 //#include<windows.h>  
 #ifndef UNICODE
 #define UNICODE
 #endif
 
 #define WIN32_LEAN_AND_MEAN
-
 #include <winsock2.h>
 #include <ws2tcpip.h>
-
 // Need to link with Ws2_32.lib
 #pragma comment(lib, "ws2_32.lib")
+
 #else
 #include <signal.h>
 #include <sys/socket.h>
@@ -30,6 +29,7 @@
 #include <fcntl.h>
 #include <pthread.h>
 #endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -56,7 +56,7 @@ struct package_header {
  */
 #define QUEUE_SIZE 1024
 struct messagequeue {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 	HANDLE lock;
 #else
     pthread_mutex_t lock;
@@ -78,7 +78,7 @@ struct clientsocket {
     int connectstatus;
     
     /* network thread id */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 	HANDLE  pid;
 #else
     pthread_t pid;
@@ -105,7 +105,7 @@ clientsocket_init(const char *addr, unsigned short port) {
     s_clientsocket->recvqueue = (struct messagequeue*)malloc(sizeof(struct messagequeue));
     memset(s_clientsocket->sendqueue, 0, sizeof(struct messagequeue));
     memset(s_clientsocket->recvqueue, 0, sizeof(struct messagequeue));
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 	s_clientsocket->sendqueue->lock = CreateMutex(NULL, FALSE, NULL);
 	s_clientsocket->recvqueue->lock = CreateMutex(NULL, FALSE, NULL);
 #else
@@ -139,13 +139,13 @@ static void message_free(struct message *message) {
 
 static void
 message_queue_pop(struct messagequeue *q) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 	WaitForSingleObject(&q->lock, INFINITE);
 #else
     pthread_mutex_lock(&q->lock);
 #endif
     if (q->head == q->tail) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 		ReleaseMutex(&q->lock);
 #else
         pthread_mutex_unlock(&q->lock);
@@ -156,7 +156,7 @@ message_queue_pop(struct messagequeue *q) {
     if (++q->head >= QUEUE_SIZE) {
         q->head = 0;
     }
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 	ReleaseMutex(&q->lock);
 #else
     pthread_mutex_unlock(&q->lock);
@@ -166,13 +166,13 @@ message_queue_pop(struct messagequeue *q) {
 
 static struct message*
 message_queue_head(struct messagequeue *q) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 	WaitForSingleObject(&q->lock, INFINITE);
 #else
     pthread_mutex_lock(&q->lock);
 #endif
     if (q->head == q->tail) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 		ReleaseMutex(&q->lock);
 #else
         pthread_mutex_unlock(&q->lock);
@@ -180,7 +180,7 @@ message_queue_head(struct messagequeue *q) {
         return NULL;
     }
     struct message *ret = q->queue[q->head];
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 	ReleaseMutex(&q->lock);
 #else
     pthread_mutex_unlock(&q->lock);
@@ -190,14 +190,14 @@ message_queue_head(struct messagequeue *q) {
 
 static int
 message_queue_push(struct messagequeue *q, struct message *message) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 	WaitForSingleObject(&q->lock, INFINITE);
 #else
     pthread_mutex_lock(&q->lock);
 #endif
     int next = (q->tail + 1) % QUEUE_SIZE;
     if (q->head == next) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 		ReleaseMutex(&q->lock);
 #else
         pthread_mutex_unlock(&q->lock);
@@ -206,7 +206,7 @@ message_queue_push(struct messagequeue *q, struct message *message) {
     }
     q->queue[q->tail] = message;
     q->tail = next;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 	ReleaseMutex(&q->lock);
 #else
     pthread_mutex_unlock(&q->lock);
@@ -341,7 +341,7 @@ int clientsocket_recv(unsigned short *prototype, char *outdata, unsigned int *ou
     return recvsize;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 DWORD WINAPI clientsocket_networkprocess(LPVOID pM) {
 	//-------------------------
 	// Initialize Winsock
@@ -537,7 +537,7 @@ clientsocket_networkprocess(void *param) {
 int
 clientsocket_start() {
     assert(s_clientsocket);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 	if (0 == s_clientsocket->pid) {
 		long pid;
 		s_clientsocket->pid = CreateThread(NULL, 0, clientsocket_networkprocess, (LPVOID)0, 0, &pid);
@@ -552,7 +552,7 @@ clientsocket_start() {
 
 int
 clientsocket_stop() {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifdef _WIN32
 	// 1. kill network thread
 	if (0 != s_clientsocket->pid) {
 		CloseHandle(s_clientsocket->pid);

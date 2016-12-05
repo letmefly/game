@@ -85,7 +85,38 @@ LOCAL_SRC_FILES += ../manual/network/lua_cocos2dx_network_manual.cpp \
                    ../../../../external/lua/luasocket/timeout.c \
                    ../../../../external/lua/luasocket/udp.c \
                    ../../../../external/lua/luasocket/unix.c \
-                   ../../../../external/lua/luasocket/usocket.c
+                   ../../../../external/lua/luasocket/usocket.c \
+                   ../../../../external/lua/clientsocket/clientsocket.c \
+                   ../../../../external/lua/clientsocket/lua-clientsocket.c \
+                   ../../../../external/lua/lfs/lfs.c \
+                   ../../../../external/lua/lpeg/lpcap.c \
+                   ../../../../external/lua/lpeg/lpcode.c \
+                   ../../../../external/lua/lpeg/lpprint.c \
+                   ../../../../external/lua/lpeg/lptree.c \
+                   ../../../../external/lua/lpeg/lpvm.c \
+                   ../../../../external/lua/cjson/dtoa.c \
+                   ../../../../external/lua/cjson/g_fmt.c \
+                   ../../../../external/lua/cjson/lua_cjson.c \
+                   ../../../../external/lua/cjson/strbuf.c \
+                   ../../../../external/lua/md5/des56.c \
+                   ../../../../external/lua/md5/ldes56.c \
+                   ../../../../external/lua/md5/md5.c \
+                   ../../../../external/lua/md5/md5lib.c \
+                   ../../../../external/lua/pbc/alloc.c \
+                   ../../../../external/lua/pbc/array.c \
+                   ../../../../external/lua/pbc/bootstrap.c \
+                   ../../../../external/lua/pbc/context.c \
+                   ../../../../external/lua/pbc/decode.c \
+                   ../../../../external/lua/pbc/lua-pbc.c \
+                   ../../../../external/lua/pbc/map.c \
+                   ../../../../external/lua/pbc/pattern.c \
+                   ../../../../external/lua/pbc/proto.c \
+                   ../../../../external/lua/pbc/register.c \
+                   ../../../../external/lua/pbc/rmessage.c \
+                   ../../../../external/lua/pbc/stringpool.c \
+                   ../../../../external/lua/pbc/varint.c \
+                   ../../../../external/lua/pbc/wmessage.c \
+                   ../../../../external/lua/zlib/lua_zlib.c
 
 #cocosbuilder
 LOCAL_SRC_FILES += ../manual/cocosbuilder/lua_cocos2dx_cocosbuilder_manual.cpp \
@@ -147,7 +178,14 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                     $(LOCAL_PATH)/../../../../external/xxtea \
                     $(LOCAL_PATH)/../../../.. \
                     $(LOCAL_PATH)/../../../../external/lua \
-                    $(LOCAL_PATH)/../../../../external/lua/quick
+                    $(LOCAL_PATH)/../../../../external/lua/quick \
+                    $(LOCAL_PATH)/../../../../external/lua/clientsocket \
+                    $(LOCAL_PATH)/../../../../external/lua/lfs \
+                    $(LOCAL_PATH)/../../../../external/lua/lpeg \
+                    $(LOCAL_PATH)/../../../../external/lua/md5 \
+                    $(LOCAL_PATH)/../../../../external/lua/pbc \
+                    $(LOCAL_PATH)/../../../../external/lua/zlib \
+                    $(LOCAL_PATH)/../../../../external/lua/cjson
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                            $(LOCAL_PATH)/../../../../external/lua/luajit/include \
@@ -164,7 +202,14 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                            $(LOCAL_PATH)/../manual/extension \
                            $(LOCAL_PATH)/../manual/ui \
                            $(LOCAL_PATH)/../../../../external/lua/quick \
-                           $(LOCAL_PATH)/../../../..
+                           $(LOCAL_PATH)/../../../.. \
+                           $(LOCAL_PATH)/../../../../external/lua/clientsocket \
+                    	   $(LOCAL_PATH)/../../../../external/lua/lfs \
+                           $(LOCAL_PATH)/../../../../external/lua/lpeg \
+                           $(LOCAL_PATH)/../../../../external/lua/md5 \
+                           $(LOCAL_PATH)/../../../../external/lua/pbc \
+                           $(LOCAL_PATH)/../../../../external/lua/zlib \
+                           $(LOCAL_PATH)/../../../../external/lua/cjson
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_android_static
 
